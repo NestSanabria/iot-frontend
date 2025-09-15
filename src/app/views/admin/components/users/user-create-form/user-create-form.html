@@ -26,8 +26,6 @@
       [class.expanded]="!isCollapsed"
       id="userCreateForm"
     >
-
-
       <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" novalidate>
         <!-- Campo Nombre -->
         <label for="nameInput">
@@ -126,12 +124,45 @@
           </div>
         </label>
 
-        <!-- Selector de Zonas -->
-        <app-zone-selector
-          [zones]="zones"
-          [selectedZoneIds]="newUser.zone_ids"
-          (selectionChange)="onZonesChanged($event)"
-        ></app-zone-selector>
+        <!-- Selector de Zonas mejorado -->
+        <label class="dropdown-zones" aria-label="Seleccionar zonas asignadas">
+          <div class="zones-header">
+            <span>Zonas asignadas ({{ newUser.zoneIds.length }} seleccionadas)</span>
+            <button
+              type="button"
+              class="toggle-zones-btn"
+              (click)="toggleZonesList()"
+              aria-expanded="{{ zonesListOpen }}"
+              aria-controls="zonesList"
+            >
+              {{ zonesListOpen ? 'Ocultar' : 'Mostrar' }} lista
+            </button>
+          </div>
+
+          <div
+            class="zones-list"
+            [class.open]="zonesListOpen"
+            id="zonesList"
+            role="group"
+            aria-multiselectable="true"
+          >
+            <div *ngFor="let zone of zones" class="zone-item">
+              <input
+                type="checkbox"
+                [id]="'zone-' + zone.zoneId"
+                [value]="zone.zoneId"
+                [checked]="newUser.zoneIds.includes(zone.zoneId)"
+                (change)="onZoneCheckboxChange($event, zone.zoneId)"
+              />
+              <label [for]="'zone-' + zone.zoneId">{{ zone.zoneName }}</label>
+            </div>
+          </div>
+
+          <!-- Mensaje error si no hay zonas seleccionadas -->
+          <div *ngIf="!newUser.zoneIds.length && zonesTouched" class="error">
+            Debes seleccionar al menos una zona.
+          </div>
+        </label>
 
         <!-- Botones de acción -->
         <div class="actions">

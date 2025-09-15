@@ -84,12 +84,35 @@ form {
   /* ----------
      2.1 Estructura por campos
      ---------- */
-  label.nombre        { grid-column: 1 / 2; grid-row: 1 / 2; }
-  label.email         { grid-column: 2 / 3; grid-row: 1 / 2; }
-  label.password      { grid-column: 1 / 2; grid-row: 2 / 3; }
-  .dropdown-role      { grid-column: 2 / 3; grid-row: 2 / 3; }
-  .dropdown-zones     { grid-column: 1 / 3; grid-row: 3 / 4; }
-  .actions            { grid-column: 1 / 3; grid-row: 4 / 5; }
+  label.nombre {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  label.email {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  label.password {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+
+  .dropdown-role {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+
+  .dropdown-zones {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+  }
+
+  .actions {
+    grid-column: 1 / 3;
+    grid-row: 4 / 5;
+  }
 
   /* ----------
      2.2 Etiquetas generales
@@ -230,90 +253,75 @@ form {
      4. DROPDOWN ZONAS (ocupa ambas columnas)
      ========================================================================== */
   .dropdown-zones {
+    grid-column: 1 / 3;
     margin-top: 1.25rem;
-    position: relative;
-    padding-right: 0.5rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
 
-    &.error .custom-select {
-      border-color: #e74c3c;
-      box-shadow: 0 0 6px #e74c3c;
+    .zones-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      .toggle-zones-btn {
+        background: none;
+        border: none;
+        color: var(--color-accent);
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.9rem;
+
+        &:hover,
+        &:focus-visible {
+          text-decoration: underline;
+          outline: none;
+        }
+      }
     }
 
-    .custom-select {
-      position: relative;
+    .zones-list {
+      max-height: 180px;
+      overflow-y: auto;
       border: 1.5px solid var(--color-border);
       border-radius: 6px;
-      padding: 0.7rem 1rem;
+      padding: 0.5rem 1rem;
       background: var(--color-bg);
-      cursor: pointer;
-      user-select: none;
-      color: var(--color-text);
-      width: 100%;
-      box-sizing: border-box;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      display: none;
+      transition: max-height 0.3s ease;
 
-      &:focus-visible {
-        outline: none;
-        border-color: var(--color-accent);
-        box-shadow: 0 0 6px var(--color-accent);
+      &.open {
+        display: block;
       }
 
-      .selected-value {
-        font-weight: 600;
-      }
+      .zone-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.3rem;
 
-      &::after {
-        content: '▾';
-        position: absolute;
-        right: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1.1rem;
-        color: var(--color-text-secondary);
-        pointer-events: none;
-      }
-
-      .options {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--color-bg);
-        border-radius: 6px;
-        margin-top: 0.35rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        max-height: 160px;
-        overflow-y: auto;
-        z-index: 1000;
-        padding-bottom: 0.5rem;
-
-        &.open {
-          display: block;
+        input[type="checkbox"] {
+          margin-right: 0.6rem;
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
         }
 
-        li {
-          padding: 0.55rem 1rem;
+        label {
           cursor: pointer;
-          font-weight: 500;
-          transition: background-color 0.2s ease;
-
-          &:hover,
-          &:focus {
-            background-color: var(--color-accent);
-            color: white;
-            outline: none;
-          }
-
-          &.selected {
-            font-weight: 700;
-            background-color: var(--color-accent-dark);
-            color: white;
-          }
+          user-select: none;
         }
       }
     }
+
+    .error {
+      color: #e74c3c;
+      font-size: 0.85rem;
+      margin-top: 0.35rem;
+      font-weight: 600;
+    }
   }
+
 
   /* ==========================================================================
      5. BOTONES DE ACCIÓN

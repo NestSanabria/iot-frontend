@@ -18,24 +18,15 @@ import { UserModel } from '../../../../../core/models/ui/user.model';
 import { UserService } from '../../../../../core/services/users/user.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 
-import { ZoneSelectorComponent } from '../../zones/zone-selector/zone-selector';
-
 import { mapUserModelToCreateDTO } from '../../../../../core/mappers';
 
 /**
  * Componente formulario para crear usuarios.
- *
- * Ahora este componente recibe roles y zonas desde su padre,
- * para facilitar la reutilización y mantener la lógica clara.
  */
 @Component({
   selector: 'app-user-create-form',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ZoneSelectorComponent,
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './user-create-form.html',
   styleUrls: ['./user-create-form.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -50,46 +41,28 @@ export class UserCreateFormComponent {
   /** Evento que se emite cuando un usuario es creado */
   @Output() userCreated = new EventEmitter<void>();
 
-  /** Evento para cancelar creación */
+  /** Evento para cancelar creación (se usa para notificar al padre si quiere) */
   @Output() cancel = new EventEmitter<void>();
 
-  /**
-   * Modelo de usuario para el formulario.
-   * Incluye password y lista de IDs de zonas seleccionadas.
-   */
-  newUser: UserModel & { password: string; zone_ids: string[] } = {
-    firebaseUid: '',
-    name: '',
-    email: '',
-    password: '',
-    roleId: '',
-    roleName: '',
-    zones: [],
-    zone_ids: [],
-  };
+  /** Modelo de usuario para el formulario */
+  newUser: UserModel & { password: string; zoneIds: string[] } = this.getEmptyUser();
 
-  // Control de UI para validaciones y dropdowns
+  // Control UI
   roleTouched = false;
-  isCollapsed = false;
+  zonesTouched = false;
   dropdownOpenRole = false;
+  zonesListOpen = false;
 
-  // Servicios inyectados con nueva API de Angular
+  /** Controla si la tarjeta está colapsada (oculta) o desplegada */
+  isCollapsed = true;
+
+  // Servicios inyectados
   private userService = inject(UserService);
   private toast = inject(HotToastService);
 
-  /**
-   * Alterna la visibilidad del formulario (colapsable).
-   */
-  toggleCollapse(): void {
-    this.isCollapsed = !this.isCollapsed;
-  }
-
-  /**
-   * Resetea el formulario y los valores internos.
-   * @param form referencia al formulario Angular
-   */
-  resetForm(form: NgForm): void {
-    this.newUser = {
+  /** Inicializa un nuevo usuario vacío */
+  private getEmptyUser() {
+    return {
       firebaseUid: '',
       name: '',
       email: '',
@@ -97,35 +70,69 @@ export class UserCreateFormComponent {
       roleId: '',
       roleName: '',
       zones: [],
-      zone_ids: [],
+      zoneIds: [],
     };
-    form.resetForm(this.newUser);
-    this.roleTouched = false;
-    this.dropdownOpenRole = false;
   }
 
   /**
-   * Actualiza la lista de zonas seleccionadas desde componente hijo.
-   * @param updatedZoneIds arreglo de IDs de zonas seleccionadas
+   * Alterna la visibilidad de la tarjeta (colapsable)
    */
-  onZonesChanged(updatedZoneIds: string[]): void {
-    this.newUser.zone_ids = updatedZoneIds;
+  toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed;
+    if (this.isCollapsed) {
+      // Si se colapsa, opcional: limpiar errores y dropdown
+      this.roleTouched = false;
+      this.zonesTouched = false;
+      this.dropdownOpenRole = false;
+      this.zonesListOpen = false;
+    }
+  }
+
+  toggleZonesList() {
+    this.zonesListOpen = !this.zonesListOpen;
+  }
+  /**
+   * Limpia el formulario y oculta la tarjeta (colapsa)
+   */
+  resetForm(form: NgForm): void {
+    this.newUser = this.getEmptyUser();
+    form.resetForm(this.newUser);
+    this.roleTouched = false;
+    this.zonesTouched = false;
+    this.dropdownOpenRole = false;
+    this.zonesListOpen = false;
+    this.isCollapsed = true;
+    this.cancel.emit(); // Notifica al padre que se canceló
+  }
+
+  /**
+   * Maneja el cambio de selección de zonas (checkbox).
+   */
+  onZoneCheckboxChange(event: Event, zoneId: string) {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    if (checked) {
+      if (!this.newUser.zoneIds.includes(zoneId)) {
+        this.newUser.zoneIds.push(zoneId);
+      }
+    } else {
+      this.newUser.zoneIds = this.newUser.zoneIds.filter(id => id !== zoneId);
+    }
+    this.zonesTouched = true;
   }
 
   /**
    * Envía el formulario para crear un nuevo usuario.
-   * Valida datos, transforma modelo a DTO y llama al servicio.
-   * @param form referencia al formulario Angular
    */
   onSubmit(form: NgForm): void {
-    // Validaciones de selección obligatoria
     if (!this.newUser.roleId) {
       this.roleTouched = true;
       this.toast.warning('Debes seleccionar un rol válido');
       return;
     }
 
-    if (!this.newUser.zone_ids || this.newUser.zone_ids.length === 0) {
+    if (!this.newUser.zoneIds || this.newUser.zoneIds.length === 0) {
+      this.zonesTouched = true;
       this.toast.warning('Debes seleccionar al menos una zona');
       return;
     }
@@ -135,13 +142,11 @@ export class UserCreateFormComponent {
       return;
     }
 
-    // Mapeamos el modelo UI a DTO esperado por backend
     const createDTO = mapUserModelToCreateDTO(this.newUser, this.newUser.password);
 
-    // Ejecutamos creación vía servicio
     this.userService.createUser({
       ...createDTO,
-      zone_ids: this.newUser.zone_ids,
+      zone_ids: this.newUser.zoneIds,
     }).subscribe({
       next: () => {
         this.toast.success('Usuario creado exitosamente');
@@ -154,17 +159,11 @@ export class UserCreateFormComponent {
     });
   }
 
-  /**
-   * Abre/cierra el dropdown de selección de rol.
-   */
+  // Dropdown rol:
   toggleDropdownRole(): void {
     this.dropdownOpenRole = !this.dropdownOpenRole;
   }
 
-  /**
-   * Maneja eventos de teclado para accesibilidad en dropdown de roles.
-   * @param event evento de teclado
-   */
   onKeydownRole(event: KeyboardEvent): void {
     if (event.key === 'Escape') this.closeDropdownRole();
     if (event.key === 'Enter' || event.key === ' ') {
@@ -173,18 +172,11 @@ export class UserCreateFormComponent {
     }
   }
 
-  /**
-   * Cierra el dropdown y marca el campo rol como tocado para validación.
-   */
   closeDropdownRole(): void {
     this.dropdownOpenRole = false;
     this.roleTouched = true;
   }
 
-  /**
-   * Selecciona un rol y actualiza el modelo interno.
-   * @param role rol seleccionado
-   */
   selectRole(role: RoleModel): void {
     if (role.roleId) {
       this.newUser.roleId = role.roleId;
@@ -194,9 +186,6 @@ export class UserCreateFormComponent {
     }
   }
 
-  /**
-   * Obtiene la etiqueta del rol seleccionado para mostrar en UI.
-   */
   get selectedRoleLabel(): string {
     const role = this.roles.find(r => r.roleId === this.newUser.roleId);
     return role ? role.roleName : 'Selecciona un rol';
