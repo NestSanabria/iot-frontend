@@ -1,0 +1,102 @@
+<form #userForm="ngForm" (ngSubmit)="save.emit()" [ngClass]="mode" novalidate>
+  <!-- Nombre -->
+  <label>
+    Nombre:
+    <input
+      type="text"
+      [(ngModel)]="user.name"
+      name="name"
+      required
+      #nameInput="ngModel"
+      [attr.aria-invalid]="nameInput.invalid && nameInput.touched"
+      [disabled]="isDisabled"
+    />
+    <div *ngIf="nameInput.invalid && nameInput.touched" class="error">Nombre es obligatorio.</div>
+  </label>
+
+  <!-- Email -->
+  <label>
+    Email:
+    <input
+      type="email"
+      [(ngModel)]="user.email"
+      name="email"
+      required
+      email
+      #emailInput="ngModel"
+      [attr.aria-invalid]="emailInput.invalid && emailInput.touched"
+      [disabled]="isDisabled"
+    />
+    <div *ngIf="emailInput.invalid && emailInput.touched" class="error">Correo válido es obligatorio.</div>
+  </label>
+
+  <!-- Contraseña (solo modo create) -->
+  <ng-container *ngIf="mode === 'create'">
+    <label>
+      Contraseña:
+      <input
+        type="password"
+        [(ngModel)]="user.password"
+        name="password"
+        required
+        #passInput="ngModel"
+        [attr.aria-invalid]="passInput.invalid && passInput.touched"
+        [disabled]="isDisabled"
+      />
+    </label>
+    <div *ngIf="passInput.invalid && passInput.touched" class="error">Contraseña es obligatoria.</div>
+  </ng-container>
+
+  <!-- Rol (oculto en edit-profile y admins) -->
+  <label class="dropdown-role" *ngIf="mode !== 'edit-profile' && !isAdmin()" [class.error]="!user.role_id && roleTouched">
+    <div
+      class="custom-select"
+      (click)="toggleDropdown()"
+      tabindex="0"
+      role="listbox"
+      aria-haspopup="listbox"
+      [attr.aria-expanded]="dropdownOpen"
+      (keydown)="onKeydown($event)"
+      [attr.aria-disabled]="isDisabled"
+      [class.disabled]="isDisabled"
+    >
+      <div class="selected-value">{{ selectedRoleLabel }}</div>
+      <ul class="options" [class.open]="dropdownOpen" role="listbox">
+        <li
+          *ngFor="let role of roles"
+          (click)="!isDisabled && selectRole(role)"
+          [class.selected]="role.id === user.role_id"
+          role="option"
+          [attr.aria-selected]="role.id === user.role_id"
+          tabindex="-1"
+        >
+          {{ role.label }}
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="!user.role_id && roleTouched" class="error">Debes seleccionar un rol.</div>
+  </label>
+
+  <!-- Zonas -->
+  <fieldset *ngIf="availableZones.length" [attr.aria-disabled]="isDisabled">
+    <legend>Zonas asignadas</legend>
+    <label *ngFor="let zone of availableZones" class="zone-label">
+      <input
+        type="checkbox"
+        [checked]="isZoneSelected(zone.zone_id)"
+        (change)="!isDisabled && onZoneCheckboxToggle(zone.zone_id)"
+        [attr.aria-checked]="isZoneSelected(zone.zone_id)"
+        [disabled]="isDisabled"
+      />
+      {{ zone.zone_name }}
+    </label>
+  </fieldset>
+
+  <!-- Botones -->
+  <div class="actions">
+    <button type="submit" [disabled]="userForm.invalid || isDisabled" aria-disabled="{{ userForm.invalid || isDisabled }}">
+      Guardar
+    </button>
+    <button type="button" (click)="cancel.emit()" [disabled]="isDisabled">Cancelar</button>
+  </div>
+</form>

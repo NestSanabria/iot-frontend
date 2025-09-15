@@ -1,0 +1,42 @@
+<!-- src/app/dashboards/admin/pages/admin-dashboard/admin-dashboard.html -->
+
+<ng-container *ngIf="userData$ | async as user; else loading">
+  <!-- Header con bienvenida personalizada -->
+  <header class="admin-header" role="banner" aria-label="Información del administrador">
+    <h1>👋 Bienvenido, {{ user.name }}</h1>
+
+    <p class="admin-email" aria-label="Correo electrónico del administrador">
+      📧 Correo: <strong>{{ user.email }}</strong>
+    </p>
+
+    <p class="admin-role" aria-label="Rol del administrador">
+      🔐 Rol: <strong>{{ user.role_name }}</strong>
+    </p>
+  </header>
+
+  <hr class="divider" aria-hidden="true" />
+
+  <!-- Área principal para widgets o resumen del sistema -->
+  <main role="main">
+    <section
+      class="admin-summary"
+      aria-labelledby="system-summary-title"
+      tabindex="0"
+    >
+      <h2 id="system-summary-title">📈 Resumen del Sistema</h2>
+      <p>
+        Aquí podrás ver estadísticas generales: número de usuarios, zonas activas,
+        dispositivos registrados, etc.
+      </p>
+      <!-- Aquí en el futuro podrías agregar componentes como
+           <app-users-summary>, <app-zones-summary>, etc -->
+    </section>
+  </main>
+</ng-container>
+
+<!-- Template para mostrar mientras se cargan los datos -->
+<ng-template #loading>
+  <p role="status" aria-live="polite" aria-busy="true">
+    Cargando datos del administrador...
+  </p>
+</ng-template>

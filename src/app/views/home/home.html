@@ -1,0 +1,24 @@
+<section class="home-section">
+  <ng-container *ngIf="userData$ | async as userData; else loading">
+    <header class="welcome-header">
+      <h1>Welcome back, {{ userData.name }}!</h1>
+      <p class="user-info">
+        <span><strong>Email:</strong> {{ userData.email }}</span> |
+        <span><strong>Role:</strong> {{ userData.role_name }}</span>
+      </p>
+    </header>
+
+    <section class="dashboard">
+      <h2>Your IoT Devices</h2>
+      <p class="dashboard-note">
+        (Aquí va un listado o resumen de dispositivos si tienes backend que lo provea)
+      </p>
+
+      <!-- Puedes agregar aquí futuros componentes o widgets -->
+    </section>
+  </ng-container>
+
+  <ng-template #loading>
+    <p class="loading-text">Loading user data...</p>
+  </ng-template>
+</section>

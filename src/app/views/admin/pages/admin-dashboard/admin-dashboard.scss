@@ -1,0 +1,42 @@
+.dashboard-content {
+  .admin-header {
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(20, 34, 223, 0.05);
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+      font-family: var(--font-heading);
+    }
+
+    .admin-email,
+    .admin-role {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .divider {
+    border: none;
+    height: 1px;
+    background-color: var(--color-surface);
+    margin: 2rem 0;
+  }
+
+  .admin-summary {
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-text);
+    }
+
+    p {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<!-- user-list.html
+
+<table class="user-table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Rol</th>
+      <th>Zonas</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ getRoleLabel(user.role_id) }}</td>
+      <td>{{ getUserZonesLabel(user) }}</td>
+      <td>
+        <button (click)="editUser.emit(user)">Editar</button>
+        <button (click)="deleteUser.emit(user.firebase_uid)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table> -->

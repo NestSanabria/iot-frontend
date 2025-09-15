@@ -1,0 +1,43 @@
+<!-- src/app/shared/components/sidebar/sidebar.html -->
+
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="collapse-btn" (click)="toggleCollapse()">
+    <span class="material-symbols-outlined">
+      {{ isCollapsed ? 'chevron_right' : 'chevron_left' }}
+    </span>
+  </div>
+
+  <div class="sidebar-content">
+    <ng-container *ngFor="let link of links">
+      <!-- Si tiene hijos, es una sección -->
+      <div *ngIf="link.children?.length" class="sidebar-link" (click)="handleSectionClick(link.label)"
+           [class.active]="isOpenMap[link.label]">
+
+        <div class="link-content">
+          <span class="material-symbols-outlined">{{ link.icon }}</span>
+          <span class="link-text" *ngIf="!isCollapsed">{{ link.label }}</span>
+        </div>
+        <span class="chevron material-symbols-outlined" *ngIf="!isCollapsed">
+          {{ isOpenMap[link.label] ? 'expand_less' : 'expand_more' }}
+        </span>
+      </div>
+
+      <!-- Submenú -->
+      <nav class="sidebar-nav" *ngIf="isOpenMap[link.label] && link.children?.length && !isCollapsed">
+        <a *ngFor="let child of link.children" [routerLink]="child.route" routerLinkActive="active">
+          <span class="material-symbols-outlined">{{ child.icon }}</span>
+          <span class="link-text">{{ child.label }}</span>
+        </a>
+      </nav>
+
+      <!-- Link simple -->
+      <a *ngIf="!link.children" [routerLink]="link.route" routerLinkActive="active" class="sidebar-link"
+         (click)="handleLinkClick()">
+        <div class="link-content">
+          <span class="material-symbols-outlined">{{ link.icon }}</span>
+          <span class="link-text" *ngIf="!isCollapsed">{{ link.label }}</span>
+        </div>
+      </a>
+    </ng-container>
+  </div>
+</aside>

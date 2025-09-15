@@ -1,0 +1,132 @@
+/* src/app/features/auth/pages/login/login.scss */
+
+/* Variables específicas para login con tonos azules */
+:root {
+  --login-bg-gradient: linear-gradient(135deg, #0a2342, #14457e);
+  --login-form-bg: #f0f4ff;
+  --login-form-shadow: rgba(10, 35, 75, 0.4);
+  --login-text-primary: #102a54;
+  --login-text-secondary: #526a95;
+  --login-accent: #3b82f6;           /* Color borde inicial en foco */
+  --login-accent-hover: #60a5fa;     /* Color borde cuando está enfocado */
+  --login-accent-light: #93c5fd;     /* Sombra de foco */
+  --login-error: #ef4444;
+}
+
+.login-section {
+  /* Fondo con degradado azul profesional y oscuro */
+  background: rgb(10, 35, 75);
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+
+  /* Fondo claro para el formulario */
+  background-color: rgba(25, 69, 139, 0.4);
+
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+
+  /* Sombra azul oscura */
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+
+  color: var(--login-text-primary);
+  transition: box-shadow 0.3s ease;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-weight: 600;
+  color: var(--login-text-secondary);
+}
+
+.text-inputs {
+  border: 2px solid var(--login-accent);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+
+  /* Fondo claro para que el área de texto se note bien */
+  background-color: #fff;
+
+  color: rgb(10, 35, 75);
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.text-inputs:focus {
+  outline: none;
+
+  /* Al entrar en foco el borde cambia a color definido */
+  border-color: var(--login-accent);
+
+  /* Cambia fondo a un azul muy claro al enfocarse */
+  background-color: #e8f0fe;
+
+  /* Sombra azul clara alrededor */
+  box-shadow: 0 0 10px var(--login-accent-light);
+}
+
+.text-inputs:hover:not(:focus) {
+  /* Cuando el input está hover pero no enfocado, borde azul claro */
+  border-color: var(--login-accent-light);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--login-text-secondary);
+}
+
+.check > input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: var(--login-error);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  background-color: var(--login-accent);
+  border: none;
+  color: var(--login-form-bg);
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--login-accent-light);
+  box-shadow: none;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--login-accent-hover);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.7);
+}

@@ -1,0 +1,60 @@
+/* src/styles/_theme-light.scss */
+
+/**
+* Estas variables se definen en el selector `:root`, lo cual significa que se aplican globalmente
+* por defecto en todo el documento, a menos que sean sobrescritas por una clase como `.dark-theme`.
+*
+* Son usadas para definir la apariencia del modo claro (light mode) de tu app.
+*/
+:root {
+  // Fondo general del cuerpo de la aplicación (usualmente aplicado al body)
+  --color-bg: linear-gradient(145deg, #ecebf8, #e3eefc);
+
+  // Fondo de superficies o contenedores (tarjetas, paneles, etc.)
+  --color-surface: linear-gradient(145deg, #f7f7f7, #f7f7f7);
+
+  // Color principal para el texto (gris oscuro, buena legibilidad sobre fondo claro)
+  --color-text: #1f2937;
+
+  // Color para texto secundario o menos relevante
+  --color-text-secondary: #4b5563;
+
+  // Colores de acento para botones, enlaces y otros elementos interactivos
+  --color-accent: #3b82f6; // Azul base para elementos destacados
+  --color-accent-light: #93c5fd; // Azul más claro (hover, focus, backgrounds)
+  --color-accent-dark: #b8c8f3; // Azul más oscuro (bordes, énfasis)
+  --color-accent-muted: #dbeafe; // Azul muy suave, ideal para fondos o bordes sutiles
+
+  // Colores de estado para errores y éxito
+  --color-error: #ef4444; // Rojo brillante (mensajes o íconos de error)
+  --color-error-dark: #b91c1c; // Rojo más fuerte (bordes o fondos en errores)
+  --color-success: #22c55e; // Verde vibrante (éxito, confirmación)
+
+  // Estilos del botón de cerrar sesión en modo claro
+  --btn-logout-bg: linear-gradient(145deg, #a1c4fd, #c2e9fb); // Fondo con gradiente azul pastel
+  --btn-logout-border: #5ac8fa; // Borde azul vibrante
+  --btn-logout-text: #0b2545; // Color del ícono SVG del botón
+  --btn-logout-hover-bg: linear-gradient(145deg, #90b6f1, #b5dcf8); // Fondo al hacer hover
+  --btn-logout-shadow: rgba(90, 200, 250, 0.4); // Sombra suave azulada para efecto glow
+
+  // Estilos para el Header
+  --header-link: transparent;
+
+  // Estilos para la barra de navegación en modo claro
+  --navbar-bg: linear-gradient(145deg, #f5f8f8, #ecf9fa); // Fondo de la navbar
+  --navbar-border: #1db3e1; // Borde inferior (o general) de la navbar
+  --navbar-text: #2e3a8c; // Color del texto principal de la navbar
+  --navbar-link: #3e4fb5; // Color de los enlaces en la navbar
+  --navbar-link-hover: #4c60cc; // Color de los enlaces al pasar el cursor
+  --navbar-shadow: rgba(113, 199, 248, 0.2); // Sombra suave para darle profundidad
+
+  // estilos para dropdowns y selects personalizados
+  --dropdown-bg: #f9fafb; // Más suave que blanco puro
+  --dropdown-text: #1f2937; // Gris oscuro para buena legibilidad
+  --dropdown-hover-bg: #e0f2fe; // Azul muy claro (coincide con accent-muted)
+  --dropdown-hover-text: #1e40af; // Azul oscuro que da buena visibilidad
+  --dropdown-selected-bg: #3b82f6; // Azul principal (coincide con color-accent)
+  --dropdown-selected-text: #ffffff; // Blanco para contraste fuerte
+  --color-border: #d1d5db;
+
+}

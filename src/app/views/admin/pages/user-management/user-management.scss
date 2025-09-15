@@ -1,0 +1,33 @@
+.btn-back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: #005bb5;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.24);
+  }
+
+  &:focus {
+    outline: 2px solid #7ec0ee;
+    outline-offset: 2px;
+  }
+}
+
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--color-text);
+}

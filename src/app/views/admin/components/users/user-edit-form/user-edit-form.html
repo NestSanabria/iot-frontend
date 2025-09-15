@@ -1,0 +1,26 @@
+<!-- user-edit-form.html -->
+<div *ngIf="editingUser">
+  <h3>Editando: {{ editingUser.name }}</h3>
+
+  <input [(ngModel)]="editingUser.name" placeholder="Nombre" />
+  <input [(ngModel)]="editingUser.email" placeholder="Email" />
+
+  <select [(ngModel)]="editingUser.role_id">
+    <option *ngFor="let role of roles" [value]="role.role_id">{{ role.role_name }}</option>
+  </select>
+
+  <h4>Zonas</h4>
+  <div *ngFor="let zone of availableZones">
+    <label>
+      <input
+        type="checkbox"
+        [checked]="editingUserZoneIds.includes(zone.zone_id)"
+        (change)="onZoneToggle.emit(zone.zone_id)"
+      />
+      {{ zone.zone_name }}
+    </label>
+  </div>
+
+  <button (click)="saveUserChanges.emit()">Guardar</button>
+  <button (click)="cancelEdit.emit()">Cancelar</button>
+</div>

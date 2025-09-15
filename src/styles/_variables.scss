@@ -1,0 +1,37 @@
+/* --------------------------------------------
+   src/styles/_variables.scss
+   Variables globales SCSS para layout y temas
+---------------------------------------------*/
+
+// Breakpoints para el layout responsivo del navbar
+$navbar-max-width-xs: 100%;     // móviles pequeños (≤ 600px)
+$navbar-max-width-sm: 600px;    // tablets (601px – 900px)
+$navbar-max-width-md: 900px;    // laptops (901px – 1200px)
+$navbar-max-width-lg: 1200px;   // escritorios grandes (1201px – 1400px)
+$navbar-max-width-xl: 1400px;   // monitores muy grandes (> 1400px)
+
+// Puedes modificar fácilmente estos valores para ajustar visualmente la navbar sin tocar todo el layout
+
+/* --------------------------------------------
+   Importación de fuentes modernas
+---------------------------------------------*/
+
+// Inter (fuente moderna, limpia, ideal para UI)
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* --------------------------------------------
+   Variables CSS personalizadas
+   (disponibles en :root)
+---------------------------------------------*/
+
+:root {
+  // Fuente para el cuerpo del texto
+  --font-body: "Inter", sans-serif;
+
+  // Fuente para títulos y encabezados
+  --font-heading: "Inter", sans-serif;
+
+  // Puedes agregar más variables reutilizables aquí:
+  // --spacing-sm: 0.5rem;
+  // --box-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

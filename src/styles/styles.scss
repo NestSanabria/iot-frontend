@@ -1,0 +1,13 @@
+/* src/styles/styles.scss */
+
+/* Estilos de librerías externas */
+@use "@ngxpert/hot-toast/styles";
+
+/* Estilos del proyecto (ordenados) */
+@use "reset";          // Reset CSS global
+@use "variables";      // Variables globales (colores, fuentes, etc.)
+@use "theme-light";    // Tema claro
+@use "theme-dark";     // Tema oscuro
+@use "base";           // Estilos base del proyecto
+@use "typography";     // Estilos de tipografía ✅
+@use "layout";         // Estilos generales de layout

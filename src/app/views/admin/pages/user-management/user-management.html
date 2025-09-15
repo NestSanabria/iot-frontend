@@ -1,0 +1,11 @@
+<!-- src/app/dashboards/admin/pages/user-management/user-management.html -->
+
+<button class="btn-back" (click)="goBack()">Volver</button>
+
+<h1>Gestión de Usuarios</h1>
+
+<app-user-create-form
+  [roles]="roles"
+  [zones]="zones"
+  (userCreated)="onUserCreated()"
+/>

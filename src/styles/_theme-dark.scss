@@ -1,0 +1,57 @@
+/* src/styles/_theme-dark.scss */
+
+/**
+ * Este selector aplica solo cuando el <body> (u otro contenedor) tiene la clase `.dark-theme`.
+ * Dentro de él, se definen variables CSS personalizadas para el modo oscuro.
+ */
+.dark-theme {
+
+  // Fondo general de la app (usualmente aplicado al body)
+  --color-bg: linear-gradient(145deg, #060524, #14234b);
+
+  // Fondo de superficies o contenedores (tarjetas, paneles, etc.)
+  --color-surface: linear-gradient(145deg, #0b0c3073, #090b33);
+
+  // Color principal del texto en modo oscuro (gris azulado claro para buen contraste)
+  --color-text: #cbd5e1;
+
+  // Color para texto secundario o de menor importancia
+  --color-text-secondary: #94a3b8;
+
+  // Colores de acento (azules) para botones, enlaces, elementos interactivos
+  --color-accent: #60a5fa;         // Acento base
+  --color-accent-light: #04142e;   // Acento más claro (hover o foco)
+  --color-accent-dark: #061955;    // Acento más oscuro
+  --color-accent-muted: #1e293b;   // Acento atenuado (fondos secundarios, bordes)
+
+  // Colores para estados de error o éxito
+  --color-error: #ef4444;          // Rojo claro (errores visibles)
+  --color-error-dark: #b91c1c;     // Rojo oscuro (botones, bordes de error)
+  --color-success: #22c55e;        // Verde para estados exitosos
+
+  // Colores personalizados para el botón de cerrar sesión (logout)
+  --btn-logout-bg: linear-gradient(145deg, #14244f, #1e3a8a); // Fondo del botón
+  --btn-logout-border: #3b82f6;                               // Borde del botón
+  --btn-logout-text: #e0f2fe;                                 // Color del ícono SVG
+  --btn-logout-hover-bg: linear-gradient(145deg, #1d2c5b, #1e40af); // Fondo al hacer hover
+  --btn-logout-shadow: rgba(96, 165, 250, 0.4);               // Sombra azul tenue para efecto glow
+
+  // Estilos para el Header
+  --header-link: transparent;
+
+  // Estilos para la barra de navegación (navbar)
+  --navbar-bg: transparent;                                     // Fondo de la navbar
+  --navbar-border: #095268;                                   // Borde de la navbar
+  --navbar-text: #c9d1ff;                                     // Color del título y textos
+  --navbar-link: #7ab7ff;                                     // Enlaces por defecto
+  --navbar-link-hover: #c9d1ff;                               // Enlaces al hacer hover
+  --navbar-shadow: rgba(113, 199, 248, 0.4);                  // Sombra para profundidad
+
+  --dropdown-bg: #1e293b;
+  --dropdown-text: #cbd5e1;
+  --dropdown-hover-bg: #334155;
+  --dropdown-hover-text: #93c5fd;
+  --dropdown-selected-bg: var(--color-accent-muted);
+  --dropdown-selected-text: white;
+  --color-border: rgba(255, 255, 255, 0.15);
+}

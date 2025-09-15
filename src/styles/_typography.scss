@@ -1,0 +1,45 @@
+/* ----------------------------------------------------
+   src/styles/_typography.scss
+   Estilos tipográficos globales para encabezados y texto
+   Fuente principal: Inter (moderna, legible, profesional)
+-----------------------------------------------------*/
+
+/* Encabezados: H1, H2, H3 */
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);      // Fuente definida para títulos (en _variables.scss)
+  color: var(--color-text);              // Color de texto primario
+  font-weight: 600;                      // Semi-negrita para mejor jerarquía visual
+  margin-bottom: 0.75rem;                // Espaciado inferior para separar del siguiente elemento
+  line-height: 1.2;                      // Altura de línea ajustada para mejor legibilidad
+}
+
+/* Encabezado principal (secciones o pantallas) */
+h1 {
+  font-size: 2.5rem;                     // Tamaño grande para títulos principales
+  letter-spacing: -0.5px;                // Ajuste fino para una apariencia más moderna
+}
+
+/* Encabezado secundario (subtítulos importantes) */
+h2 {
+  font-size: 2rem;                       // Tamaño mediano para subtítulos
+  letter-spacing: -0.4px;
+}
+
+/* Encabezado terciario (bloques o widgets) */
+h3 {
+  font-size: 1.5rem;                     // Tamaño pequeño para títulos internos o secciones
+  letter-spacing: -0.3px;
+}
+
+/* Párrafos generales */
+p {
+  font-family: var(--font-body);        // Fuente del cuerpo del texto (definida en _variables.scss)
+  font-weight: 400;                     // Peso normal para lectura cómoda
+  font-size: 1rem;                      // Tamaño base (16px aprox)
+  margin-bottom: 1rem;                  // Espaciado inferior entre párrafos
+  color: var(--color-text-secondary);   // Color más suave para reducir fatiga visual
+  line-height: 1.6;                     // Altura de línea para párrafos más aireados
+  letter-spacing: 0.2px;                // Ligero espaciado para mejorar legibilidad
+}

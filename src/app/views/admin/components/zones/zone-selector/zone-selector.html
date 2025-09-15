@@ -1,0 +1,18 @@
+<!-- src/app/dashboard/admin/components/zones/zone-selector/zone-selector.html -->
+
+<div class="zone-selector">
+  <h3>Asignar zonas</h3>
+  <div class="zone-list">
+    <!-- Recorremos el arreglo de zonas (ZoneModel[]) -->
+    <label *ngFor="let zone of zones" class="zone-item">
+      <!-- Checkbox para seleccionar o deseleccionar la zona -->
+      <input
+        type="checkbox"
+        [checked]="selectedZoneIds.includes(zone.zoneId)"
+        (change)="toggleZone(zone.zoneId, $event.target.checked)"
+        aria-label="Seleccionar zona {{ zone.zoneName }}"
+      />
+      {{ zone.zoneName }}
+    </label>
+  </div>
+</div>

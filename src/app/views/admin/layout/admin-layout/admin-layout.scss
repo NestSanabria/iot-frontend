@@ -1,0 +1,16 @@
+.admin-layout {
+  display: flex;
+
+  // Sidebar ya está en posición fixed, así que damos espacio
+  .layout-content {
+    flex: 1;
+    transition: margin-left 0.3s ease;
+    margin-left: 220px; // Ancho normal del sidebar
+  }
+
+  &.sidebar-collapsed {
+    .layout-content {
+      margin-left: 64px; // Ancho colapsado
+    }
+  }
+}

@@ -1,0 +1,21 @@
+/* src/styles/_layout.scss */
+
+.layout-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; // ✅ evita centrar horizontalmente los hijos
+  padding: 0;            // ✅ evita padding lateral que encoge header o sidebar
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.layout-content {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0 auto; // ✅ centra el contenido si es necesario dentro del ancho máximo
+}

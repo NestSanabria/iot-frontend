@@ -1,0 +1,36 @@
+/* src/styles/_reset.scss */
+
+// Puedes mantener normalize.css importado aquí:
+@import "normalize.css";
+
+// Reset box-sizing y márgenes:
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Reset listas:
+ul,
+ol {
+  list-style: none;
+}
+
+// Reset para elementos de formulario:
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+// Botones con cursor pointer
+button {
+  cursor: pointer;
+}

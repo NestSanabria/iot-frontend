@@ -1,0 +1,11 @@
+<!-- src/app/features/admin/layout/admin-layout/admin-layout.html -->
+
+<app-layout-container
+  [isSidebarCollapsed]="isSidebarCollapsed"
+  (isSidebarCollapsedChange)="onSidebarCollapseChange($event)"
+  [sidebarLinks]="adminLinks"
+>
+  <div layout-content>
+    <router-outlet></router-outlet>
+  </div>
+</app-layout-container>

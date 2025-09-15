@@ -1,0 +1,54 @@
+.home-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+
+  .welcome-header {
+    background-color: #f5f7fa;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    margin-bottom: 2rem;
+
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+
+    .user-info {
+      font-size: 1rem;
+      color: #555;
+      span {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  .dashboard {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.08);
+
+    h2 {
+      margin-top: 0;
+      color: #34495e;
+      font-weight: 600;
+    }
+
+    .dashboard-note {
+      color: #666;
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .loading-text {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+  }
+}

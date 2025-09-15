@@ -1,0 +1,144 @@
+<!--
+  Tarjeta para crear un nuevo usuario.
+  El formulario está colapsable y tiene validaciones básicas.
+-->
+
+<div class="user-create-card" [class.collapsed]="isCollapsed">
+  <div class="card-wrapper">
+    <!-- Encabezado clickeable para colapsar/expandir -->
+    <div
+      class="card-header"
+      [class.open]="!isCollapsed"
+      (click)="toggleCollapse()"
+      role="button"
+      tabindex="0"
+      aria-expanded="{{ !isCollapsed }}"
+      aria-controls="userCreateForm"
+    >
+      <h2>Crear usuario</h2>
+      <span class="arrow">▾</span>
+    </div>
+
+    <!-- Cuerpo del formulario -->
+    <div
+      class="card-body"
+      [class.collapsed]="isCollapsed"
+      [class.expanded]="!isCollapsed"
+      id="userCreateForm"
+    >
+
+
+      <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" novalidate>
+        <!-- Campo Nombre -->
+        <label for="nameInput">
+          Nombre:
+          <input
+            id="nameInput"
+            type="text"
+            name="name"
+            [(ngModel)]="newUser.name"
+            required
+            #nameInput="ngModel"
+            [attr.aria-invalid]="nameInput.invalid && nameInput.touched"
+          />
+        </label>
+        <!-- Mensaje error Nombre -->
+        <div *ngIf="nameInput.invalid && nameInput.touched" class="error">
+          Nombre es obligatorio.
+        </div>
+
+        <!-- Campo Email -->
+        <label for="emailInput">
+          Email:
+          <input
+            id="emailInput"
+            type="email"
+            name="email"
+            [(ngModel)]="newUser.email"
+            required
+            email
+            #emailInput="ngModel"
+            [attr.aria-invalid]="emailInput.invalid && emailInput.touched"
+          />
+        </label>
+        <!-- Mensaje error Email -->
+        <div *ngIf="emailInput.invalid && emailInput.touched" class="error">
+          Correo válido es obligatorio.
+        </div>
+
+        <!-- Campo Contraseña -->
+        <label for="passwordInput">
+          Contraseña:
+          <input
+            id="passwordInput"
+            type="password"
+            name="password"
+            [(ngModel)]="newUser.password"
+            required
+            #passInput="ngModel"
+            [attr.aria-invalid]="passInput.invalid && passInput.touched"
+          />
+        </label>
+        <!-- Mensaje error Contraseña -->
+        <div *ngIf="passInput.invalid && passInput.touched" class="error">
+          Contraseña es obligatoria.
+        </div>
+
+        <!-- Selector Rol personalizado -->
+        <label
+          class="dropdown-role"
+          [class.error]="!newUser.roleId && roleTouched"
+          aria-label="Seleccionar rol de usuario"
+          role="group"
+        >
+          <div
+            class="custom-select custom-select-role"
+            (click)="toggleDropdownRole()"
+            tabindex="0"
+            role="listbox"
+            aria-haspopup="listbox"
+            [attr.aria-expanded]="dropdownOpenRole"
+            (keydown)="onKeydownRole($event)"
+            aria-activedescendant="role-selected"
+          >
+            <div id="role-selected" class="selected-value">{{ selectedRoleLabel }}</div>
+            <ul
+              class="options"
+              [class.open]="dropdownOpenRole"
+              role="listbox"
+              tabindex="-1"
+            >
+              <li
+                *ngFor="let role of roles"
+                (click)="selectRole(role)"
+                [class.selected]="role.roleId === newUser.roleId"
+                role="option"
+                [attr.aria-selected]="role.roleId === newUser.roleId"
+                tabindex="-1"
+              >
+                {{ role.roleName }}
+              </li>
+            </ul>
+          </div>
+          <!-- Mensaje error Rol -->
+          <div *ngIf="!newUser.roleId && roleTouched" class="error">
+            Debes seleccionar un rol.
+          </div>
+        </label>
+
+        <!-- Selector de Zonas -->
+        <app-zone-selector
+          [zones]="zones"
+          [selectedZoneIds]="newUser.zone_ids"
+          (selectionChange)="onZonesChanged($event)"
+        ></app-zone-selector>
+
+        <!-- Botones de acción -->
+        <div class="actions">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="resetForm(userForm)">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

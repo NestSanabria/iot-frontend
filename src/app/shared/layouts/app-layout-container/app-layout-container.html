@@ -1,0 +1,33 @@
+<!-- src/app/shared/layouts/app-layout-container.html -->
+
+<!-- HEADER FULL WIDTH -->
+<header class="layout-header">
+  <div class="header-left">
+    <h1 class="app-title">App IoT</h1>
+  </div>
+
+  <div class="header-right">
+    <app-navbar></app-navbar>
+  </div>
+</header>
+
+
+<!-- WRAPPER DEL LAYOUT PRINCIPAL -->
+<div
+  class="layout-wrapper"
+  [class.collapsed]="isSidebarCollapsed && !isMobile"
+  [class.mobile-sidebar-open]="isMobileSidebarOpen"
+>
+  <app-sidebar
+    class="layout-sidebar"
+    [collapsed]="isSidebarCollapsed"
+    (collapsedChange)="onSidebarCollapseChange($event)"
+    [links]="sidebarLinks"
+  ></app-sidebar>
+
+  <div class="layout-main">
+    <section class="layout-content">
+      <ng-content select="[layout-content]"></ng-content>
+    </section>
+  </div>
+</div>

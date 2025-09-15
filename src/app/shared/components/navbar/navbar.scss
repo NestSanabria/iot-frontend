@@ -1,0 +1,204 @@
+// src/app/shared/components/navbar/navbar.scss
+
+$sidebar-width: 240px;      // Variable con el ancho de la sidebar (usada para responsive si se requiere)
+$breakpoint-md: 768px;      // Punto de quiebre para dispositivos medianos (tablets)
+
+.navbar {
+  position: relative;       // Posición relativa para permitir posicionar hijos absolutamente si se requiere
+  width: auto;              // El ancho será automático, ocupando el 100% del contenedor padre (ej: .header-right)
+  height: 50px;             // Altura completa del contenedor padre
+  display: flex;            // Flexbox para organizar elementos hijos horizontalmente
+  flex: 1 1 auto;           // Permite que el navbar crezca y se reduzca según el espacio disponible
+  min-width: 0;             // Previene overflow en flexbox (muy importante para contenido que puede crecer)
+  justify-content: space-between; // Espacio máximo entre elementos hijos (izquierda, centro y derecha)
+  align-items: center;      // Centra verticalmente los elementos hijos
+  padding: 0 1.5rem;        // Espaciado horizontal interno (izquierda y derecha)
+  box-sizing: border-box;   // Incluye padding dentro del width/height para evitar overflow
+
+  background: var(--navbar-bg);      // Color de fondo definido en variables CSS
+  backdrop-filter: blur(12px);       // Efecto de desenfoque de fondo (para navbar semi-transparente)
+  border-radius: 6px;                // Bordes redondeados
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra suave para dar profundidad
+  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; // Transiciones suaves para efectos visuales
+
+  .navbar-center {
+    flex: 1 1 auto;           // Crece y se reduce con el espacio disponible
+    display: flex;            // Flexbox para centrar contenido interno
+    justify-content: center;  // Centra horizontalmente los elementos hijos
+    align-items: center;      // Centra verticalmente los elementos hijos
+
+    .admin-navbar {
+      display: flex;          // Flexbox para organizar elementos internos (ej. título)
+      align-items: center;    // Centrado vertical
+
+      .admin-title {
+        font-size: 1.6rem;    // Tamaño de fuente grande para el título
+        font-weight: 700;     // Negrita
+        margin: 0;            // Sin margen para evitar espacios no deseados
+        color: var(--navbar-link-hover);  // Color definido en variables CSS para hover links
+        user-select: none;    // Evita que el texto sea seleccionado con el cursor
+        white-space: nowrap;  // Evita que el texto se rompa en varias líneas
+        padding-bottom: 0.25rem; // Pequeño espacio debajo del texto
+      }
+    }
+
+    .nav-list {
+      list-style: none;       // Quita los puntos de lista por defecto
+      margin: 0;              // Sin margen
+      padding: 0;             // Sin padding
+      display: flex;          // Flexbox para mostrar los items de la lista en fila
+      gap: 1.5rem;            // Separación horizontal entre los items
+
+      li a {
+        color: var(--navbar-link);         // Color del enlace
+        text-decoration: none;             // Sin subrayado
+        font-weight: 600;                  // Texto semi-negrita
+
+        &.active,                         // Estado activo del enlace
+        &:hover {                        // Estado hover del enlace
+          color: var(--navbar-link-hover);      // Cambia color al pasar el mouse o si está activo
+          border-bottom: 2px solid var(--navbar-link-hover); // Línea inferior para indicar activo/hover
+          padding-bottom: 0.2rem;         // Espacio interno abajo para el borde inferior
+        }
+      }
+    }
+  }
+
+  .navbar-right {
+    display: flex;              // Flexbox para organizar botones u otros elementos al final
+    align-items: center;        // Centrado vertical
+    gap: 1rem;                  // Separación entre elementos (ej. botones)
+
+    .dark-mode-toggle {
+      background: transparent;                  // Fondo transparente
+      border: 1.5px solid var(--navbar-border); // Borde fino con color definido
+      color: var(--navbar-text);                // Color del texto/botón
+      padding: 0.4rem 0.7rem;                   // Espaciado interno
+      border-radius: 6px;                        // Bordes redondeados
+      cursor: pointer;                          // Cursor pointer para indicar que es clickeable
+      font-weight: 600;                         // Texto semi-negrita
+      transition: 0.3s ease-in-out;             // Transición suave para hover
+      user-select: none;                        // No permite seleccionar el texto
+
+      &:hover {
+        background-color: var(--navbar-border); // Fondo cambia al pasar mouse
+        color: var(--color-bg);                  // Texto cambia a color de fondo (contraste)
+      }
+    }
+
+    .logout-btn {
+      display: flex;                           // Flexbox para centrar el icono dentro
+      align-items: center;                     // Centrado vertical
+      justify-content: center;                 // Centrado horizontal
+      width: 40px;                            // Ancho fijo
+      height: 40px;                           // Alto fijo (cuadrado)
+      padding: 0.5rem;                        // Espaciado interno
+      background: var(--btn-logout-bg);       // Fondo del botón logout
+      border: 1px solid var(--btn-logout-border); // Borde del botón
+      border-radius: 50%;                     // Botón redondo (círculo)
+      cursor: pointer;                        // Cursor pointer para indicar clickeable
+      transition: all 0.3s ease-in-out;      // Transición suave para efectos hover/active
+      box-shadow: 0 0 10px var(--btn-logout-shadow); // Sombra para dar efecto de profundidad
+      position: relative;                     // Posicionamiento relativo para efectos pseudo-elementos
+
+      &:hover {
+        background: var(--btn-logout-hover-bg); // Cambio de fondo al pasar mouse
+        box-shadow: 0 0 20px var(--btn-logout-shadow); // Sombra más grande
+        transform: translateY(-2px);              // Pequeña elevación visual
+      }
+
+      &:active {
+        transform: scale(0.96);                   // Pequeña reducción al hacer click (feedback)
+      }
+
+      svg {
+        width: 20px;                              // Tamaño del icono SVG
+        height: 20px;
+        stroke: var(--btn-logout-text);           // Color del trazo del SVG
+      }
+
+      &::before {
+        content: "";                             // Pseudo-elemento para efecto de glow animado
+        position: absolute;                      // Posicionamiento absoluto relativo al botón
+        top: -50%;                              // Posición arriba expandida para el glow
+        left: -50%;                             // Posición izquierda expandida para el glow
+        width: 200%;                            // Tamaño del glow mayor que el botón
+        height: 200%;
+        background: radial-gradient(circle, var(--btn-logout-shadow), transparent 60%); // Gradiente radial para glow
+        animation: pulseGlow 3s ease-in-out infinite;  // Animación de pulso infinita
+        z-index: 0;                             // Colocado detrás del contenido del botón
+        border-radius: 50%;                     // Redondeado para coincidir con el botón
+      }
+
+      & > * {
+        position: relative;                     // Los hijos (icono) deben estar sobre el glow
+        z-index: 1;
+      }
+    }
+
+    // Animación para el efecto de pulso en el botón logout
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1);   // Tamaño normal
+        opacity: 0.4;          // Transparencia baja
+      }
+      50% {
+        transform: scale(1.1); // Tamaño aumentado para pulso
+        opacity: 1;            // Total opacidad
+      }
+    }
+  }
+
+  &.collapsed {
+    opacity: 0;              // Invisible cuando está colapsado
+    pointer-events: none;    // No responde a eventos de mouse (no clickeable)
+    transform: translateY(-100%); // Se mueve hacia arriba fuera de la vista
+    transition: opacity 0.4s ease, transform 0.4s ease; // Transición suave para esta acción
+  }
+
+  &:hover {
+    opacity: 1 !important;       // Cuando se pasa el mouse se vuelve visible
+    pointer-events: auto !important; // Reactiva eventos mouse (clickeable)
+    transform: translateY(0) !important; // Se posiciona en su lugar normal
+  }
+
+  @media (max-width: $breakpoint-md) { // Estilos para dispositivos con ancho menor a 768px
+    padding: 0 1rem;                 // Reduce padding horizontal
+
+    .navbar-center {
+      justify-content: flex-start;  // Alinea el contenido al inicio (izquierda)
+
+      .admin-navbar .admin-title {
+        font-size: 1.3rem;          // Reduce tamaño del título para pantallas pequeñas
+      }
+
+      .nav-list {
+        gap: 1rem;                  // Reduce el espacio entre items del menú
+
+        li a {
+          font-size: 0.9rem;        // Reduce tamaño de fuente de links
+        }
+      }
+    }
+
+    .navbar-right {
+      margin-left: auto;            // Empuja el contenido hacia la derecha
+      gap: 0.8rem;                  // Reduce el espacio entre botones
+
+      .dark-mode-toggle {
+        padding: 0.3rem 0.5rem;    // Reduce padding interno
+        font-size: 0.9rem;         // Reduce tamaño de fuente
+      }
+
+      .logout-btn {
+        width: 36px;               // Reduce tamaño del botón logout
+        height: 36px;
+
+        svg {
+          width: 18px;             // Reduce tamaño del icono SVG
+          height: 18px;
+        }
+      }
+    }
+  }
+}

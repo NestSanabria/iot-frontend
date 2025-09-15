@@ -1,0 +1,105 @@
+// src/app/shared/components/sidebar/sidebar.scss
+
+// Anchos del sidebar normal y colapsado
+$sidebar-width: 240px;
+$sidebar-collapsed-width: 50px;
+
+.sidebar {
+  height: 100%;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  width: $sidebar-width;
+  overflow: hidden;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  position: relative; // Posición relativa para controlar layout externo
+
+  // Estado colapsado: reduce ancho del sidebar
+  &.collapsed {
+    width: $sidebar-collapsed-width;
+  }
+
+  // Botón para colapsar/expandir sidebar
+  .collapse-btn {
+    cursor: pointer;
+    padding: 0.75rem;
+    font-size: 1.5rem;
+    color: var(--sidebar-toggle-color);
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  // Contenedor principal del contenido del sidebar, scroll vertical si es necesario
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+  }
+
+  // Links principales o secciones (con hijos)
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // separa contenido del label y chevron
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+    color: var(--sidebar-link-color);
+
+    // Estilos para hover y estado activo
+    &:hover,
+    &.active {
+      background-color: var(--sidebar-link-hover);
+      color: var(--sidebar-link-hover-text);
+    }
+
+    // Contenido interno: icono + texto con separación
+    .link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem; // separa icono del texto
+
+      .material-symbols-outlined {
+        font-size: 1.5rem; // tamaño uniforme de iconos
+      }
+
+      .link-text {
+        font-weight: 500; // texto con peso medio
+      }
+    }
+  }
+
+  // Submenú desplegable para links hijos
+  .sidebar-nav {
+    padding-left: 2rem; // indentación para hijos
+    display: flex;
+    flex-direction: column;
+
+    a {
+      padding: 0.25rem 0;
+      color: var(--sidebar-link-color);
+      font-weight: 400;
+      text-decoration: none;
+
+      // Aquí agregamos flex para separar icono y texto igual que en padres
+      display: flex;
+      align-items: center;
+      gap: 0.75rem; // separación icono-texto para hijos
+
+      .material-symbols-outlined {
+        font-size: 1.5rem; // icono hijos igual tamaño que padres
+      }
+
+      // Estilos hover y activo para links hijos
+      &:hover,
+      &.active {
+        color: var(--sidebar-link-hover-text);
+        font-weight: 600; // peso mayor al estar activo o hover
+      }
+    }
+  }
+}

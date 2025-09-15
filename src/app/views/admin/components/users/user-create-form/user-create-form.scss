@@ -1,0 +1,433 @@
+// ==========================================================================
+// Archivo: user-create-form.scss
+// Ruta: src/app/features/admin/pages/user-management/components/user-create-form/
+// Descripción: Estilos SCSS para el formulario de creación de usuarios.
+// ==========================================================================
+
+/* ==========================================================================
+   1. CONTENEDOR PRINCIPAL: Tarjeta del formulario
+   ========================================================================== */
+.user-create-card {
+  max-width: 700px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+
+  // Estado colapsado (título oculto)
+  &.collapsed {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  /* ----------
+     1.1 Encabezado de la tarjeta (colapsable)
+     ---------- */
+  .card-header {
+    background-color: var(--color-accent-dark);
+    color: #fff;
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+
+    .arrow {
+      font-size: 1.25rem;
+      transform: rotate(0deg);
+      transition: transform 0.3s ease;
+    }
+
+    &.open .arrow {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* ----------
+     1.2 Cuerpo de la tarjeta (colapsable con animación)
+     ---------- */
+  .card-body {
+    padding: 1.5rem 2rem;
+    background-color: var(--color-surface);
+    position: relative;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+
+    &.collapsed {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &.expanded {
+      max-height: 1000px; // Valor alto para permitir la animación
+      opacity: 1;
+    }
+  }
+}
+
+/* ==========================================================================
+   2. FORMULARIO
+   ========================================================================== */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-text);
+
+  /* ----------
+     2.1 Estructura por campos
+     ---------- */
+  label.nombre        { grid-column: 1 / 2; grid-row: 1 / 2; }
+  label.email         { grid-column: 2 / 3; grid-row: 1 / 2; }
+  label.password      { grid-column: 1 / 2; grid-row: 2 / 3; }
+  .dropdown-role      { grid-column: 2 / 3; grid-row: 2 / 3; }
+  .dropdown-zones     { grid-column: 1 / 3; grid-row: 3 / 4; }
+  .actions            { grid-column: 1 / 3; grid-row: 4 / 5; }
+
+  /* ----------
+     2.2 Etiquetas generales
+     ---------- */
+  label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* ----------
+     2.3 Inputs comunes (text, email, password)
+     ---------- */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  .dropdown-role .custom-select {
+    margin-top: 0.4rem;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    width: 100%;
+    box-sizing: border-box;
+    height: 38px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  input:focus,
+  .dropdown-role .custom-select:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 6px var(--color-accent);
+    background: var(--color-surface);
+  }
+
+  input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    color: var(--color-text-secondary);
+    border-color: #ddd;
+  }
+
+  .error {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+    font-weight: 600;
+  }
+
+  /* ==========================================================================
+     3. DROPDOWN ROL (2ª columna, fila 2)
+     ========================================================================== */
+  .dropdown-role {
+    padding-top: 0.7rem;
+    margin-top: 0.4rem;
+    position: relative;
+    padding-right: 0.5rem;
+
+    &.error .custom-select {
+      border-color: #e74c3c;
+      box-shadow: 0 0 6px #e74c3c;
+    }
+
+    .custom-select {
+      display: flex;
+      align-items: center;
+      position: relative;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      color: var(--color-text);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      .selected-value {
+        font-weight: 600;
+        line-height: 38px;
+      }
+
+      &::after {
+        content: '▾';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+        color: var(--color-text-secondary);
+        pointer-events: none;
+      }
+
+      .options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--color-bg);
+        border-radius: 6px;
+        margin-top: 0.35rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        max-height: 160px;
+        overflow-y: auto;
+        z-index: 1000;
+        padding-bottom: 0.5rem;
+
+        &.open {
+          display: block;
+        }
+
+        li {
+          padding: 0.55rem 1rem;
+          cursor: pointer;
+          font-weight: 500;
+          transition: background-color 0.2s ease;
+
+          &:hover,
+          &:focus {
+            background-color: var(--color-accent);
+            color: white;
+            outline: none;
+          }
+
+          &.selected {
+            font-weight: 700;
+            background-color: var(--color-accent-dark);
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  /* ==========================================================================
+     4. DROPDOWN ZONAS (ocupa ambas columnas)
+     ========================================================================== */
+  .dropdown-zones {
+    margin-top: 1.25rem;
+    position: relative;
+    padding-right: 0.5rem;
+
+    &.error .custom-select {
+      border-color: #e74c3c;
+      box-shadow: 0 0 6px #e74c3c;
+    }
+
+    .custom-select {
+      position: relative;
+      border: 1.5px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      background: var(--color-bg);
+      cursor: pointer;
+      user-select: none;
+      color: var(--color-text);
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      &:focus-visible {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 6px var(--color-accent);
+      }
+
+      .selected-value {
+        font-weight: 600;
+      }
+
+      &::after {
+        content: '▾';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+        color: var(--color-text-secondary);
+        pointer-events: none;
+      }
+
+      .options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--color-bg);
+        border-radius: 6px;
+        margin-top: 0.35rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        max-height: 160px;
+        overflow-y: auto;
+        z-index: 1000;
+        padding-bottom: 0.5rem;
+
+        &.open {
+          display: block;
+        }
+
+        li {
+          padding: 0.55rem 1rem;
+          cursor: pointer;
+          font-weight: 500;
+          transition: background-color 0.2s ease;
+
+          &:hover,
+          &:focus {
+            background-color: var(--color-accent);
+            color: white;
+            outline: none;
+          }
+
+          &.selected {
+            font-weight: 700;
+            background-color: var(--color-accent-dark);
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  /* ==========================================================================
+     5. BOTONES DE ACCIÓN
+     ========================================================================== */
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.8rem;
+
+    button {
+      padding: 0.65rem 1.4rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+      &:first-child {
+        background-color: var(--color-accent);
+        color: white;
+
+        &:hover:not(:disabled) {
+          filter: brightness(0.9);
+          box-shadow: 0 4px 10px rgba(0, 122, 204, 0.5);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+      }
+
+      &:last-child {
+        background-color: #e0e0e0;
+        color: #333;
+
+        &:hover:not(:disabled) {
+          background-color: #cfcfcf;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  /* ==========================================================================
+     6. BOTÓN ASIGNAR ZONAS
+     ========================================================================== */
+  .zones-button {
+    grid-column: 1 / 3;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-accent);
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 122, 204, 0.6);
+    margin-top: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+
+    &:hover {
+      background-color: var(--color-accent);
+      box-shadow: 0 6px 16px rgba(0, 122, 204, 0.8);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(0, 122, 204, 0.5);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent-dark);
+      outline-offset: 2px;
+    }
+  }
+
+  /* ==========================================================================
+     7. RESPONSIVE
+     ========================================================================== */
+  @media (max-width: 650px) {
+    grid-template-columns: 1fr;
+
+    label.nombre,
+    label.email,
+    label.password,
+    .dropdown-role,
+    .dropdown-zones,
+    .actions,
+    .zones-button {
+      grid-column: auto !important;
+      grid-row: auto !important;
+      margin-top: 1.25rem;
+    }
+
+    .actions {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+
+    .zones-button {
+      width: 100%;
+    }
+  }
+}

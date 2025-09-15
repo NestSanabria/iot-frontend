@@ -1,0 +1,182 @@
+/* --------------------------------------------
+   src/app/shared/layouts/app-layout-container.scss
+   Estilos del layout principal y estructura general
+---------------------------------------------*/
+
+// Importa variables desde un archivo global de estilos para usarlas aquí
+@use '../../../../styles/variables' as *;
+
+// Variables locales para dimensiones y puntos de quiebre
+$sidebar-width: 240px;             // Ancho estándar de la barra lateral
+$sidebar-collapsed-width: 72px;   // Ancho reducido de la barra lateral cuando está colapsada
+$navbar-height: 64px;              // Altura fija del header/navbar
+$breakpoint-md: 1024px;            // Punto de quiebre para dispositivos medianos (ej. tablets)
+
+.layout-header {
+  position: fixed;                 // Fija el header en la parte superior de la pantalla
+  top: 0;                         // Posición en la parte superior
+  left: 0;                        // Posición a la izquierda
+  width: 100vw;                   // Ocupa todo el ancho de la ventana
+  height: $navbar-height;         // Altura fija definida por variable
+  display: flex;                  // Usa flexbox para layout horizontal
+  align-items: center;            // Centra verticalmente el contenido
+  justify-content: space-between; // Espacio máximo entre elementos (izq y der)
+  padding: 0 2rem;                // Espaciado interno horizontal (izq y der)
+  background: var(--header-link); // Color de fondo definido en variables CSS
+  z-index: 100;                   // Asegura que el header esté encima de otros elementos
+
+
+  .header-left {
+    flex-shrink: 0;               // No permite que este elemento reduzca su tamaño
+    margin-right: 8rem;           // Separación a la derecha (espacio entre título y navbar)
+
+    .app-title {
+      font-size: 1.6rem;          // Tamaño de fuente del título
+      font-weight: 700;           // Negrita fuerte
+      color: var(--navbar-link-hover);  // Color definido para títulos o links activos
+      user-select: none;          // Evita que el texto sea seleccionado
+      margin: 0;                  // Sin margen para evitar espacios innecesarios
+      white-space: nowrap;        // Evita que el texto haga salto de línea
+      padding: 0.25rem 0.5rem;   // Espacio interno (arriba/abajo e izquierda/derecha)
+    }
+  }
+
+  .header-right {
+    flex: 1 1 auto;               // Permite crecer o encoger según espacio disponible
+    height: 100%;
+    display: flex;                // Flexbox para layout horizontal
+    justify-content: flex-end;    // Alinea contenido a la derecha
+    align-items: center;          // Centra verticalmente los elementos hijos
+    min-width: 0;                 // Evita overflow horizontal en flexbox
+  }
+}
+
+/* Media queries para distintos tamaños de pantalla, ajustan el ancho máximo del header-right */
+@media (max-width: 1400px) {
+  .header-right {
+    max-width: 100%;             // Ajusta el ancho máximo para pantallas menores
+  }
+}
+@media (max-width: 1200px) {
+  .header-right {
+    max-width: 100%;
+  }
+}
+@media (max-width: 900px) {
+  .header-right {
+    max-width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .header-right {
+    max-width: 100%;
+  }
+}
+
+/* Asegurar que el componente app-navbar ocupe todo el ancho disponible */
+app-navbar {
+  display: flex;              // Flexbox para layout
+  flex-grow: 1;               // Crece para ocupar espacio restante
+  width: 100%;                // Ocupa 100% ancho disponible
+  min-width: 0;               // Evita overflow
+}
+
+/* Dentro del navbar, que el nav ocupe el 100% y distribuya sus elementos */
+nav.navbar {
+  width: 100%;                     // Ancho completo del navbar
+  display: flex;                   // Flexbox para layout horizontal
+  justify-content: space-between;  // Elementos separados en extremos
+  align-items: center;             // Centrado vertical
+  padding: 0 1rem;                 // Padding horizontal
+  box-sizing: border-box;          // Padding incluido en ancho total
+}
+
+/* Layout general de la aplicación */
+.layout-wrapper {
+  width: 100vw;                   // Ocupa todo el ancho de la ventana
+  display: flex;                  // Flexbox para layout vertical (column)
+  flex-direction: column;         // Apila hijos verticalmente
+  background-color: var(--color-bg);  // Color de fondo general
+  color: var(--color-text);       // Color de texto general
+
+  .layout-sidebar {
+    position: fixed;              // Barra lateral fija
+    top: $navbar-height;          // Debajo del header (offset altura navbar)
+    left: 0;                     // Posición en la izquierda
+    width: $sidebar-width;        // Ancho estándar definido
+    height: calc(100vh - #{$navbar-height}); // Altura restante de la ventana menos header
+    z-index: 20;                 // Nivel de apilamiento (por debajo del header)
+    transition: width 0.3s ease;  // Transición suave para cambiar ancho (colapsar)
+    background-color: var(--sidebar-bg); // Color de fondo de sidebar
+
+    &.collapsed {
+      width: $sidebar-collapsed-width; // Ancho reducido cuando está colapsada
+    }
+  }
+
+  .layout-main {
+    margin-left: $sidebar-width;     // Deja espacio a la izquierda para la sidebar
+    margin-top: $navbar-height;      // Deja espacio arriba para el header
+    flex: 1;                        // Crece para ocupar espacio restante vertical
+    display: flex;                  // Flexbox para contenido interno
+    flex-direction: column;         // Organiza hijos verticalmente
+    min-height: calc(100vh - #{$navbar-height}); // Altura mínima del contenido
+    transition: margin-left 0.3s ease; // Transición para mover contenido cuando sidebar cambia ancho
+    background-color: var(--main-bg); // Color de fondo principal
+
+    .layout-content {
+      padding: 2rem;                // Espaciado interno para el contenido
+      flex: 1;                     // Crece para ocupar espacio disponible
+      overflow-y: auto;            // Scroll vertical cuando el contenido excede la altura
+    }
+  }
+
+  &.collapsed {
+    .layout-sidebar {
+      width: $sidebar-collapsed-width; // Cambia ancho sidebar al estado colapsado
+    }
+
+    .layout-main {
+      margin-left: $sidebar-collapsed-width; // Ajusta margen izquierdo para compensar sidebar colapsada
+    }
+  }
+}
+
+/* Estilos para dispositivos móviles o pantallas menores a $breakpoint-md (1024px) */
+@media (max-width: $breakpoint-md) {
+  .layout-sidebar {
+    transform: translateX(-100%);  // Oculta sidebar moviéndola hacia la izquierda (fuera de pantalla)
+    transition: transform 0.3s ease; // Transición suave para aparecer/desaparecer
+    width: $sidebar-width;          // Ancho normal para cuando esté visible
+    height: calc(100vh - #{$navbar-height}); // Altura correcta
+    top: $navbar-height;            // Posicionado debajo del header
+    left: 0;
+  }
+
+  .layout-wrapper.mobile-sidebar-open {
+    .layout-sidebar {
+      transform: translateX(0);     // Sidebar visible (movida a su posición normal)
+    }
+  }
+
+  .layout-main {
+    margin-left: 0;                // Quita margen para ocupar todo el ancho (sidebar oculta)
+  }
+
+  .layout-header {
+    padding: 0 1rem;               // Reduce padding horizontal en header
+    flex-wrap: wrap;               // Permite que los elementos se envuelvan en varias líneas
+    justify-content: center;       // Centra horizontalmente contenido del header
+
+    .header-right {
+      width: 100%;                 // Header-right ocupa todo el ancho disponible
+      max-width: 100%;             // Máximo ancho permitido
+      justify-content: center;     // Centra los elementos hijos
+      margin-top: 0.5rem;          // Margen superior para separar elementos
+    }
+  }
+
+  .layout-content {
+    padding-top: calc(#{$navbar-height} + 1rem);  // Padding extra arriba para evitar solapamiento con header fijo
+  }
+}

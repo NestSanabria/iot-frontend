@@ -1,13 +1,61 @@
-<!doctype html>
+<!-- src/index.html -->
+
+<!DOCTYPE html>
 <html lang="en">
+<!--
+  Etiqueta raíz del documento HTML.
+  El atributo 'lang="en"' indica que el contenido está en inglés.
+-->
+
 <head>
-  <meta charset="utf-8">
-  <title>IotFontend</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!--
+    Define la codificación de caracteres utilizada.
+    UTF-8 es el estándar más común, compatible con la mayoría de los caracteres internacionales.
+  -->
+  <meta charset="utf-8" />
+
+  <!-- Título de la página, que se muestra en la pestaña del navegador. -->
+  <title>IoT-App</title>
+
+  <!--
+    Define la URL base para todas las URLs relativas en el documento.
+    '/' significa que todas las rutas relativas se basan en el dominio raíz.
+    Importante para el enrutamiento en aplicaciones SPA (Single Page Application).
+  -->
+  <base href="/" />
+
+  <!-- Hace que el diseño sea responsivo.
+  Controla cómo se escala el contenido en dispositivos móviles. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!--
+    Preconexión a la fuente de Google Fonts para mejorar el rendimiento.
+    Establece conexión anticipada al dominio de fuentes.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!--
+    Inclusión de fuentes desde Google Fonts.
+    'Montserrat' y 'Share Tech' son usadas por el diseño de la aplicación.
+    Los pesos (wght) 400, 500, 600 están disponibles para Montserrat.
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <!--
+    Ícono de la pestaña del navegador (favicon).
+    Aparece en la barra de título o pestaña del navegador.
+  -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
+
 <body>
+  <!--
+    Punto de montaje de la aplicación frontend Angular.
+    El componente raíz (app-root) se renderiza aquí dinámicamente mediante JavaScript.
+  -->
   <app-root></app-root>
 </body>
+
 </html>

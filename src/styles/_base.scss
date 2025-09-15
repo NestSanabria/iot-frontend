@@ -1,0 +1,39 @@
+/* src/styles/_base.scss */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;         // ✅ asegura que el body ocupe el ancho completo
+  min-height: 100vh;    // ✅ asegura que ocupe toda la altura de la pantalla
+  overflow-x: hidden;   // ✅ evita scroll horizontal no deseado
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-accent);
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: var(--color-accent-light);
+  }
+}
